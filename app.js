@@ -71,94 +71,6 @@
     setTimeout(() => playTone(600, 0.15, 'sawtooth', 0.1), 200);
   }
 
-  // ─── Advanced Soundboard Engine ───
-  function speak(text, opts = {}) {
-    if (!audioEnabled) return;
-    if (!('speechSynthesis' in window)) return;
-    window.speechSynthesis.cancel();
-    const u = new SpeechSynthesisUtterance(text);
-    u.rate = opts.rate ?? 0.92;
-    u.pitch = opts.pitch ?? (opts.deep ? 0.75 : 1);
-    u.volume = opts.volume ?? 0.9;
-    window.speechSynthesis.speak(u);
-  }
-
-  function playVineBoom() {
-    if (!audioEnabled || !audioCtx) return;
-    const t = audioCtx.currentTime;
-    const osc = audioCtx.createOscillator();
-    const gain = audioCtx.createGain();
-    osc.type = 'sine';
-    osc.frequency.setValueAtTime(80, t);
-    osc.frequency.exponentialRampToValueAtTime(20, t + 0.4);
-    gain.gain.setValueAtTime(0.5, t);
-    gain.gain.exponentialRampToValueAtTime(0.001, t + 0.5);
-    osc.connect(gain);
-    gain.connect(audioCtx.destination);
-    osc.start(t);
-    osc.stop(t + 0.5);
-    // impact noise
-    const bufferSize = audioCtx.sampleRate * 0.15;
-    const buffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
-    const data = buffer.getChannelData(0);
-    for (let i = 0; i < bufferSize; i++) data[i] = (Math.random() * 2 - 1) * (1 - i / bufferSize);
-    const noise = audioCtx.createBufferSource();
-    noise.buffer = buffer;
-    const nGain = audioCtx.createGain();
-    nGain.gain.setValueAtTime(0.3, t);
-    nGain.gain.exponentialRampToValueAtTime(0.001, t + 0.2);
-    noise.connect(nGain);
-    nGain.connect(audioCtx.destination);
-    noise.start(t);
-  }
-
-  function playAirHorn() {
-    if (!audioEnabled || !audioCtx) return;
-    const t = audioCtx.currentTime;
-    [440, 554, 659].forEach((freq, i) => {
-      const osc = audioCtx.createOscillator();
-      const gain = audioCtx.createGain();
-      osc.type = 'sawtooth';
-      osc.frequency.value = freq;
-      gain.gain.setValueAtTime(0.12, t);
-      gain.gain.setValueAtTime(0.12, t + 0.6);
-      gain.gain.exponentialRampToValueAtTime(0.001, t + 0.7);
-      osc.connect(gain);
-      gain.connect(audioCtx.destination);
-      osc.start(t);
-      osc.stop(t + 0.7);
-    });
-  }
-
-  function playSadTrombone() {
-    if (!audioEnabled || !audioCtx) return;
-    const notes = [349, 330, 311, 293, 277];
-    notes.forEach((freq, i) => {
-      setTimeout(() => playTone(freq, 0.35, 'sawtooth', 0.12), i * 280);
-    });
-  }
-
-  function playRecordScratch() {
-    if (!audioEnabled || !audioCtx) return;
-    const t = audioCtx.currentTime;
-    const bufferSize = audioCtx.sampleRate * 0.25;
-    const buffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
-    const data = buffer.getChannelData(0);
-    for (let i = 0; i < bufferSize; i++) data[i] = Math.random() * 2 - 1;
-    const src = audioCtx.createBufferSource();
-    src.buffer = buffer;
-    const filter = audioCtx.createBiquadFilter();
-    filter.type = 'highpass';
-    filter.frequency.value = 2000;
-    const gain = audioCtx.createGain();
-    gain.gain.setValueAtTime(0.25, t);
-    gain.gain.exponentialRampToValueAtTime(0.001, t + 0.25);
-    src.connect(filter);
-    filter.connect(gain);
-    gain.connect(audioCtx.destination);
-    src.start(t);
-  }
-
   function playCartoonBoing() {
     if (!audioEnabled || !audioCtx) return;
     const t = audioCtx.currentTime;
@@ -176,74 +88,91 @@
     osc.stop(t + 0.45);
   }
 
-  function playBruh() {
+  function playRecordScratch() {
     if (!audioEnabled || !audioCtx) return;
-    playTone(110, 0.5, 'square', 0.08);
-    setTimeout(() => playTone(98, 0.3, 'square', 0.06), 200);
+    const t = audioCtx.currentTime;
+    const bufferSize = audioCtx.sampleRate * 0.25;
+    const buffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
+    const data = buffer.getChannelData(0);
+    for (let i = 0; i < bufferSize; i++) data[i] = Math.random() * 2 - 1;
+    const src = audioCtx.createBufferSource();
+    src.buffer = buffer;
+    const gain = audioCtx.createGain();
+    gain.gain.setValueAtTime(0.2, t);
+    gain.gain.exponentialRampToValueAtTime(0.001, t + 0.25);
+    src.connect(gain);
+    gain.connect(audioCtx.destination);
+    src.start(t);
   }
 
-  function playLegalAlert() {
-    if (!audioEnabled || !audioCtx) return;
-    for (let i = 0; i < 4; i++) {
-      setTimeout(() => {
-        playTone(880, 0.08, 'square', 0.1);
-        playTone(660, 0.08, 'square', 0.08);
-      }, i * 180);
-    }
-  }
+  window.AppAudio = {
+    playTone,
+    playSuccess,
+    playFail: () => playTone(150, 0.3, 'sawtooth', 0.15),
+  };
 
-  const SOUNDBOARD = [
-    { id: 'eat', icon: 'sandwich', accent: 'gold', label: 'Did You Eat?', sub: 'TTS', fn: () => speak('Ivan. Have you eaten today?') },
-    { id: 'sleep', icon: 'sleep', accent: 'blue', label: 'Go To Sleep', sub: 'TTS', fn: () => speak('Go to sleep. Right now.', { deep: true }) },
-    { id: 'water', icon: 'water', accent: 'blue', label: 'Drink Water', sub: 'TTS', fn: () => speak('Drink some water. You need to hydrate.') },
-    { id: 'disappointed', icon: 'concern', accent: 'pink', label: 'Disappointed', sub: 'TTS', fn: () => speak("I'm not upset... I'm just disappointed.", { rate: 0.85 }) },
-    { id: 'father', icon: 'tie', accent: 'blue', label: 'You Are Father', sub: 'TTS', fn: () => speak('Keilah... is your father.', { deep: true, rate: 0.8 }) },
-    { id: 'boom', icon: 'boom', accent: 'red', label: 'Vine Boom', sub: 'SFX', fn: playVineBoom },
-    { id: 'horn', icon: 'horn', accent: 'gold', label: 'Air Horn', sub: 'SFX', fn: playAirHorn },
-    { id: 'trombone', icon: 'trombone', accent: 'blue', label: 'Sad Trombone', sub: 'SFX', fn: playSadTrombone },
-    { id: 'scratch', icon: 'speaker', accent: 'pink', label: 'Record Scratch', sub: 'SFX', fn: playRecordScratch },
-    { id: 'boing', icon: 'star', accent: 'gold', label: 'Cartoon Boing', sub: 'SFX', fn: playCartoonBoing },
-    { id: 'bruh', icon: 'concern', accent: 'default', label: 'Bruh', sub: 'SFX', fn: playBruh },
-    { id: 'legal', icon: 'siren', accent: 'red', label: 'Legal Alert', sub: 'SFX', fn: playLegalAlert },
-    { id: 'gavel', icon: 'hammer', accent: 'gold', label: 'Gavel', sub: 'SFX', fn: playGavel },
-    { id: 'home', icon: 'phone', accent: 'blue', label: 'Text When Home', sub: 'TTS', fn: () => speak('Text me when you get home. Immediately.') },
+  // ─── Documentary Narrator ───
+  const DOC_CHAPTERS = [
+    { chapter: 'CHAPTER I — THE MEETING', text: 'It began like any love story. Two people. Normal labels. No one suspected the family tree would file for emotional damages.' },
+    { chapter: 'CHAPTER II — EARLY SIGNS', text: 'Hydration reminders appeared. Sleep commands followed. Ivan thought it was sweet. Biology thought it was a paperwork violation.' },
+    { chapter: 'CHAPTER III — THE HOLD', text: 'Then came the photograph — Exhibit A. A grip so parental, the National Dad Registry opened an investigation.' },
+    { chapter: 'CHAPTER IV — MEDIA STORM', text: 'CBS called. Fox 5 called. CNN left seventeen voicemails. Everyone asked the same question: how is she both girlfriend and father?' },
+    { chapter: 'CHAPTER V — THE VERDICT', text: 'Courts ruled. Scientists surrendered. Keilah accepted her destiny. Ivan remained confused. The certificate was stamped APPROVED.' },
+    { chapter: 'EPILOGUE', text: 'And so, on Father\'s Day, we celebrate the woman who cared enough to become a category error — and still text "did you eat?"' },
   ];
 
-  function initSoundboard() {
-    const grid = $('#soundboardGrid');
-    if (!grid || !window.Icons) return;
+  let docChapterIdx = 0;
+  let docTypingTimer = null;
 
-    SOUNDBOARD.forEach((sound) => {
-      const btn = document.createElement('button');
-      btn.className = 'sound-btn';
-      btn.type = 'button';
-      btn.innerHTML = `
-        ${Icons.glassIcon(sound.icon, 'md', sound.accent)}
-        <span class="sound-btn-label">${sound.label}</span>
-        <span class="sound-btn-sub">${sound.sub}</span>
-      `;
-      btn.addEventListener('click', () => {
-        if (!audioEnabled) {
-          const toast = $('#xpToast');
-          if (toast) {
-            toast.textContent = 'Enable audio first!';
-            toast.classList.remove('hidden');
-            setTimeout(() => {
-              toast.classList.add('hidden');
-              toast.textContent = '+500 Father XP';
-            }, 1800);
-          }
-          btn.classList.add('playing');
-          setTimeout(() => btn.classList.remove('playing'), 400);
-          return;
-        }
-        initAudio();
-        btn.classList.add('playing');
-        sound.fn();
-        setTimeout(() => btn.classList.remove('playing'), 500);
-      });
-      grid.appendChild(btn);
+  function initDocumentary() {
+    const narration = $('#docNarration');
+    const chapterEl = $('#docChapter');
+    const dots = $('#docDots');
+    if (!narration || !chapterEl) return;
+
+    DOC_CHAPTERS.forEach((_, i) => {
+      const dot = document.createElement('button');
+      dot.type = 'button';
+      dot.className = 'doc-dot' + (i === 0 ? ' active' : '');
+      dot.setAttribute('aria-label', `Chapter ${i + 1}`);
+      dot.addEventListener('click', () => showDocChapter(i));
+      dots?.appendChild(dot);
     });
+
+    function typeText(text) {
+      clearInterval(docTypingTimer);
+      narration.textContent = '';
+      let i = 0;
+      docTypingTimer = setInterval(() => {
+        narration.textContent += text[i];
+        i++;
+        if (i >= text.length) clearInterval(docTypingTimer);
+      }, 22);
+    }
+
+    function showDocChapter(idx) {
+      docChapterIdx = idx;
+      const ch = DOC_CHAPTERS[idx];
+      chapterEl.textContent = ch.chapter;
+      typeText(ch.text);
+      dots?.querySelectorAll('.doc-dot').forEach((d, i) => d.classList.toggle('active', i === idx));
+    }
+
+    showDocChapter(0);
+    setInterval(() => {
+      docChapterIdx = (docChapterIdx + 1) % DOC_CHAPTERS.length;
+      showDocChapter(docChapterIdx);
+    }, 12000);
+
+    const docSection = $('#documentary');
+    if (docSection) {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) e.target.classList.add('doc-active');
+        });
+      }, { threshold: 0.15 });
+      observer.observe(docSection);
+    }
   }
 
   function initEvidence() {
@@ -1156,7 +1085,6 @@
       }, i * 100);
     }
     playConfettiPop();
-    if (audioEnabled) speak('Good. You ate.');
   }
 
   // ─── Init Main Experience ───
@@ -1169,8 +1097,9 @@
     initTicker();
     rotateSubtitle();
     setInterval(rotateSubtitle, 4000);
+    initDocumentary();
+    if (window.FatherGames) FatherGames.initArcade();
     initEvidence();
-    initSoundboard();
     initDashboard();
     initAcceptButton();
     initCertificate();

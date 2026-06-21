@@ -20,6 +20,8 @@
   </div>
 
   <canvas id="particleCanvas" aria-hidden="true"></canvas>
+  <div class="film-grain" aria-hidden="true"></div>
+  <div class="doc-vignette" aria-hidden="true"></div>
 
   <!-- Boot sequence -->
   <div id="bootScreen" class="boot-screen" role="dialog" aria-label="System boot sequence">
@@ -65,9 +67,10 @@
       </div>
       <div class="nav-links">
         <a href="#hero">Home</a>
+        <a href="#documentary">Film</a>
+        <a href="#newsdesk">News</a>
+        <a href="#games">Games</a>
         <a href="#evidence">Evidence</a>
-        <a href="#soundboard">Sounds</a>
-        <a href="#dashboard">Dashboard</a>
         <a href="#certificate">Certificate</a>
       </div>
     </nav>
@@ -96,6 +99,147 @@
       </div>
     </div>
 
+    <!-- DOCUMENTARY -->
+    <section id="documentary" class="section doc-film-section">
+      <div class="doc-cinematic">
+        <div class="doc-ken-burns">
+          <img src="mom.png" alt="" class="doc-hero-img" loading="lazy">
+        </div>
+        <div class="doc-cinematic-overlay"></div>
+        <div class="doc-cinematic-text">
+          <p class="doc-film-by">A DOCUMENTARY BY IVAN</p>
+          <h2 class="doc-film-title">WHEN YOUR GIRLFRIEND<br>BECOMES YOUR FATHER</h2>
+          <p class="doc-film-sub">An investigation into the most confusing relationship on earth.</p>
+          <div class="doc-ratings">
+            <span class="doc-rating-pill">IMDb 9.8/10</span>
+            <span class="doc-rating-pill">Rotten Tomatoes 98%</span>
+            <span class="doc-rating-pill">Dad Approved</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="doc-narrator glass-card" id="docNarrator">
+        <p class="doc-chapter" id="docChapter">CHAPTER I</p>
+        <p class="doc-narration" id="docNarration"></p>
+        <div class="doc-chapter-dots" id="docDots"></div>
+      </div>
+
+      <div class="doc-experts">
+        <h3 class="doc-experts-title">Expert Testimonies</h3>
+        <div class="expert-grid">
+          <blockquote class="expert-card glass-card">
+            <p>"We have no scientific framework for this. She is simultaneously girlfriend and father. Our lab caught fire."</p>
+            <cite>Dr. Helena Cross — Relationship Taxonomist, MIT</cite>
+          </blockquote>
+          <blockquote class="expert-card glass-card">
+            <p>"The 'did you eat' texts alone qualify her for federal fatherhood. Biology can file a complaint."</p>
+            <cite>Prof. Marcus Webb — National Dad Registry</cite>
+          </blockquote>
+          <blockquote class="expert-card glass-card">
+            <p>"I interviewed them. I laughed for eleven minutes. Then I cried. Then I issued a certificate."</p>
+            <cite>Judge Patricia Lane — Supreme Court of Feelings</cite>
+          </blockquote>
+        </div>
+      </div>
+
+      <div class="doc-credits glass-card">
+        <p class="credits-line">Directed by Ivan</p>
+        <p class="credits-line">Produced by Confusion Studios</p>
+        <p class="credits-line">Starring Keilah as Herself / Father / Girlfriend</p>
+        <p class="credits-line">Special Thanks: Biology (for nothing)</p>
+      </div>
+    </section>
+
+    <!-- NEWS COVERAGE -->
+    <section id="newsdesk" class="section newsdesk-section">
+      <h2 class="section-title"><span data-gicon="news" data-gsize="md"></span> National Media Coverage</h2>
+      <p class="section-sub">Major networks could not ignore the fatherhood anomaly.</p>
+
+      <article class="news-article news-cbs">
+        <header class="news-article-header">
+          <div class="news-logo news-logo-cbs" aria-label="CBS News">
+            <svg viewBox="0 0 120 40" class="logo-svg" aria-hidden="true">
+              <circle cx="20" cy="20" r="16" fill="none" stroke="#fff" stroke-width="2"/>
+              <circle cx="20" cy="20" r="10" fill="#fff"/>
+              <text x="44" y="26" fill="#fff" font-family="Arial Black, sans-serif" font-size="18" font-weight="900">CBS</text>
+              <text x="44" y="38" fill="#fff" font-family="Arial, sans-serif" font-size="9" opacity="0.85">NEWS</text>
+            </svg>
+          </div>
+          <span class="news-tag">BREAKING</span>
+        </header>
+        <div class="news-thumb-wrap">
+          <img src="mom.png" alt="" class="news-thumb" loading="lazy">
+          <span class="news-play">▶ SPECIAL REPORT</span>
+        </div>
+        <h3 class="news-headline">Scientists Baffled After Girlfriend Officially Classified as Father</h3>
+        <p class="news-meta">By Margaret O'Brien · CBS News · June 21, 2026 · 11:47 PM ET</p>
+        <p class="news-body">In what researchers are calling "a category error of historic proportions," local woman Keilah has been entered into the National Dad Registry while remaining Ivan's girlfriend. CBS News obtained exclusive footage showing what experts describe as "textbook parental carrying behavior."</p>
+        <blockquote class="news-quote">
+          <p>"We've seen concerned partners. We've seen protective partners. We've never seen someone accidentally speedrun fatherhood while still on girlfriend payroll."</p>
+          <cite>— Dr. Helena Cross, MIT</cite>
+        </blockquote>
+        <p class="news-body">The Department of Fatherhood issued a statement saying the paperwork "makes no sense" but the emotional evidence is "overwhelming." Ivan declined to comment, citing confusion.</p>
+        <div class="news-footer-bar">
+          <span>CBS NEWS EXCLUSIVE</span>
+          <span>Developing Story</span>
+        </div>
+      </article>
+
+      <article class="news-article news-fox">
+        <header class="news-article-header">
+          <div class="news-logo news-logo-fox" aria-label="Fox 5 News">
+            <svg viewBox="0 0 140 44" class="logo-svg" aria-hidden="true">
+              <text x="2" y="30" fill="#003366" font-family="Arial Black, sans-serif" font-size="26" font-weight="900">FOX</text>
+              <rect x="72" y="6" width="32" height="28" rx="4" fill="#c41230"/>
+              <text x="80" y="28" fill="#fff" font-family="Arial Black, sans-serif" font-size="22" font-weight="900">5</text>
+              <text x="106" y="22" fill="#003366" font-family="Arial, sans-serif" font-size="8" font-weight="700">NEWS</text>
+            </svg>
+          </div>
+          <span class="news-tag fox-tag">LIVE</span>
+        </header>
+        <div class="news-thumb-wrap fox-thumb">
+          <img src="mom.png" alt="" class="news-thumb" loading="lazy">
+          <span class="news-live-badge">LIVE</span>
+        </div>
+        <h3 class="news-headline">Fox 5 Investigates: How Did Keilah Become Ivan's Dad?</h3>
+        <p class="news-meta">Anchor: Dana Reeves · Fox 5 News · Father's Day Special</p>
+        <p class="news-body"><strong>DANA REEVES:</strong> Tonight we're asking the question on everyone's mind — how does your girlfriend become your father without a single biology lecture?</p>
+        <p class="news-body">Our team analyzed 14,000 text messages and found suspicious patterns: hydration reminders, sleep enforcement, and a statistically impossible number of "are you home safe?" check-ins.</p>
+        <blockquote class="news-quote fox-quote">
+          <p>"She's not his mom. She's not his dad. She's his girlfriend who moonlights as a federal father. It's unprecedented."</p>
+          <cite>— Fox 5 Legal Analyst James Porter</cite>
+        </blockquote>
+        <div class="news-anchor-row">
+          <div class="anchor-card">
+            <p class="anchor-name">Dana Reeves</p>
+            <p class="anchor-role">Lead Anchor</p>
+          </div>
+          <div class="anchor-card">
+            <p class="anchor-name">James Porter</p>
+            <p class="anchor-role">Legal Analyst</p>
+          </div>
+        </div>
+        <div class="news-footer-bar fox-bar">
+          <span>FOX 5 NEWS · LOCAL COVERAGE</span>
+          <span>Viewer Poll: 94% say "still confused"</span>
+        </div>
+      </article>
+
+      <div class="news-ticker-static glass-card">
+        <p><strong>OTHER OUTLETS:</strong> The New York Times — "Girlfriend, Father, Legend: A Modern Parable" · CNN — "Analysts Stunned" · BBC — "America's Most Confusing Family Tree"</p>
+      </div>
+    </section>
+
+    <!-- HARD GAMES -->
+    <section id="games" class="section games-section">
+      <h2 class="section-title"><span data-gicon="target" data-gsize="md" data-gaccent="red"></span> Impossible Father Games Arcade</h2>
+      <p class="section-sub">Designed to be unfair. Keilah, these are genuinely hard. Good luck.</p>
+      <div class="games-arcade glass-card">
+        <div class="game-tabs" id="gameTabs"></div>
+        <div class="game-area" id="gameArea"></div>
+      </div>
+    </section>
+
     <!-- CLASSIFIED EVIDENCE — mom.png -->
     <section id="evidence" class="section evidence-section">
       <h2 class="section-title"><span data-gicon="camera" data-gsize="md" data-gaccent="pink"></span> Classified Fatherhood Evidence</h2>
@@ -122,13 +266,6 @@
           <button class="btn-secondary" id="enhanceBtn" type="button">Enhance Image (it gets funnier)</button>
         </div>
       </div>
-    </section>
-
-    <!-- SOUNDBOARD -->
-    <section id="soundboard" class="section soundboard-section">
-      <h2 class="section-title"><span data-gicon="speaker" data-gsize="md" data-gaccent="gold"></span> Father Soundboard™</h2>
-      <p class="section-sub">Premium dad noises. Enable audio first. Not responsible for laughter.</p>
-      <div class="soundboard-grid" id="soundboardGrid"></div>
     </section>
 
     <!-- Dashboard -->
@@ -391,6 +528,7 @@
   </footer>
 
   <script src="icons.js"></script>
+  <script src="games.js"></script>
   <script src="app.js"></script>
 </body>
 </html>
