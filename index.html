@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HAPPY FATHER'S DAY, KEILAH™</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="mouse-glow" id="mouseGlow" aria-hidden="true"></div>
+
+  <div class="blob-layer" aria-hidden="true">
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
+    <div class="blob blob-4"></div>
+  </div>
+
+  <canvas id="particleCanvas" aria-hidden="true"></canvas>
+
+  <!-- Boot sequence -->
+  <div id="bootScreen" class="boot-screen" role="dialog" aria-label="System boot sequence">
+    <div class="boot-terminal">
+      <div class="boot-header">
+        <span class="boot-dot red"></span>
+        <span class="boot-dot yellow"></span>
+        <span class="boot-dot green"></span>
+        <span class="boot-title">Government Parenting Verification System v4.2.0</span>
+      </div>
+      <div class="boot-body">
+        <div id="bootLog" class="boot-log"></div>
+        <div class="boot-progress-wrap">
+          <div class="boot-progress-bar" id="bootProgress"></div>
+        </div>
+        <div class="boot-cursor-line"><span id="bootCursor">█</span></div>
+      </div>
+    </div>
+    <div id="bootReveal" class="boot-reveal hidden">
+      <p class="boot-reveal-label">OFFICIAL DETERMINATION</p>
+      <h1 class="boot-reveal-text">Keilah has officially been identified as Ivan's Father.</h1>
+      <p class="boot-reveal-sub">Proceeding to celebratory interface...</p>
+    </div>
+  </div>
+
+  <div id="mainContent" class="main-content hidden">
+    <div class="audio-toggle-wrap">
+      <label class="audio-toggle" for="audioSwitch">
+        <span class="audio-label"><span data-gicon="audio" data-gsize="sm"></span> Audio</span>
+        <input type="checkbox" id="audioSwitch" aria-label="Enable sound effects">
+        <span class="toggle-slider"></span>
+      </label>
+    </div>
+
+    <div class="news-ticker" aria-live="polite">
+      <div class="ticker-track" id="tickerTrack"></div>
+    </div>
+
+    <nav class="site-nav" aria-label="Main navigation">
+      <div class="nav-logo" id="navLogo" title="Double-click for a surprise">
+        <span data-gicon="tie" data-gsize="sm" data-gaccent="blue"></span>
+        <span class="logo-text">KEILAH™</span>
+      </div>
+      <div class="nav-links">
+        <a href="#hero">Home</a>
+        <a href="#evidence">Evidence</a>
+        <a href="#soundboard">Sounds</a>
+        <a href="#dashboard">Dashboard</a>
+        <a href="#certificate">Certificate</a>
+      </div>
+    </nav>
+
+    <!-- Hero -->
+    <section id="hero" class="section hero">
+      <div class="hero-badge">OFFICIALLY CERTIFIED • EST. ???</div>
+      <h1 class="hero-title">
+        <span class="hero-line">HAPPY FATHER'S DAY</span>
+        <span class="hero-name">KEILAH</span>
+      </h1>
+      <p class="hero-subtitle" id="heroSubtitle" aria-live="polite"></p>
+      <button class="btn-hero" id="acceptFatherBtn" type="button">
+        <span class="btn-shine"></span>
+        <span data-gicon="medal" data-gsize="sm" data-gaccent="gold"></span>
+        Accept Father Status
+      </button>
+    </section>
+
+    <!-- Achievement popup -->
+    <div id="achievementPopup" class="achievement-popup hidden" role="alert">
+      <div class="achievement-icon-wrap" data-gicon="trophy" data-gsize="lg" data-gaccent="gold"></div>
+      <div class="achievement-content">
+        <p class="achievement-label">Achievement Unlocked</p>
+        <p class="achievement-title">Promoted from Girlfriend ➜ Father</p>
+      </div>
+    </div>
+
+    <!-- CLASSIFIED EVIDENCE — mom.png -->
+    <section id="evidence" class="section evidence-section">
+      <h2 class="section-title"><span data-gicon="camera" data-gsize="md" data-gaccent="pink"></span> Classified Fatherhood Evidence</h2>
+      <p class="section-sub">Recovered from the National Dad Registry archives. Biology still disputing authenticity.</p>
+      <div class="evidence-showcase">
+        <div class="evidence-frame">
+          <div class="evidence-scanline" aria-hidden="true"></div>
+          <div class="evidence-corner tl"></div>
+          <div class="evidence-corner tr"></div>
+          <div class="evidence-corner bl"></div>
+          <div class="evidence-corner br"></div>
+          <div class="evidence-badge">TOP SECRET • FTHR-001</div>
+          <img src="mom.png" alt="Keilah holding Ivan — definitive fatherhood documentation" class="evidence-photo" id="evidencePhoto" loading="lazy">
+          <div class="evidence-caption">
+            <p class="evidence-title">Exhibit A: The Hold</p>
+            <p class="evidence-desc">Subject observed performing classic parental carry maneuver. Girlfriend status: technically still active. Father status: undeniable.</p>
+          </div>
+        </div>
+        <div class="evidence-meta glass-card">
+          <div class="meta-row"><span>File ID</span><span>FTHR-KEILAH-IMG-001</span></div>
+          <div class="meta-row"><span>Classification</span><span class="meta-highlight">Parental Hold Detected</span></div>
+          <div class="meta-row"><span>Biology's Opinion</span><span>Rejected</span></div>
+          <div class="meta-row"><span>Emotional Verdict</span><span class="meta-highlight">Certified Dad</span></div>
+          <button class="btn-secondary" id="enhanceBtn" type="button">Enhance Image (it gets funnier)</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- SOUNDBOARD -->
+    <section id="soundboard" class="section soundboard-section">
+      <h2 class="section-title"><span data-gicon="speaker" data-gsize="md" data-gaccent="gold"></span> Father Soundboard™</h2>
+      <p class="section-sub">Premium dad noises. Enable audio first. Not responsible for laughter.</p>
+      <div class="soundboard-grid" id="soundboardGrid"></div>
+    </section>
+
+    <!-- Dashboard -->
+    <section id="dashboard" class="section dashboard">
+      <h2 class="section-title"><span data-gicon="chart" data-gsize="md"></span> Live Father Dashboard</h2>
+      <p class="section-sub">Real-time metrics from the National Dad Registry™</p>
+      <div class="stats-grid" id="statsGrid"></div>
+    </section>
+
+    <!-- ID Card -->
+    <section id="idcard" class="section id-section">
+      <h2 class="section-title"><span data-gicon="idcard" data-gsize="md" data-gaccent="blue"></span> Official Identification Card</h2>
+      <div class="id-card" id="idCard">
+        <div class="id-hologram"></div>
+        <div class="id-header">
+          <span>UNITED STATES OF CONCERN</span>
+          <span>DEPARTMENT OF FATHERHOOD</span>
+        </div>
+        <div class="id-photo">
+          <img src="mom.png" alt="Keilah official ID photo" class="id-photo-img" loading="lazy">
+          <div class="id-photo-overlay">VERIFIED</div>
+        </div>
+        <div class="id-details">
+          <div class="id-row"><span class="id-label">NAME</span><span class="id-value">Keilah</span></div>
+          <div class="id-row"><span class="id-label">OCCUPATION</span><span class="id-value">Professional Father</span></div>
+          <div class="id-row"><span class="id-label">RELATIONSHIP</span><span class="id-value">Girlfriend (somehow)</span></div>
+          <div class="id-row"><span class="id-label">CLASSIFICATION</span><span class="id-value">Certified Dad</span></div>
+          <div class="id-row"><span class="id-label">STATUS</span><span class="id-value legendary">Legendary</span></div>
+        </div>
+        <div class="id-barcode" aria-hidden="true">
+          <div class="barcode-lines"></div>
+          <div class="qr-placeholder">▣▣▣<br>▣▣▣</div>
+        </div>
+        <div class="id-footer">ID #FTHR-KEILAH-∞ • VALID FOREVER</div>
+      </div>
+    </section>
+
+    <!-- Certificate -->
+    <section id="certificate" class="section cert-section">
+      <h2 class="section-title"><span data-gicon="scroll" data-gsize="md" data-gaccent="gold"></span> Certificate Generator</h2>
+      <div class="certificate-wrap">
+        <div class="certificate" id="certificate">
+          <div class="cert-seal" aria-hidden="true">⚜</div>
+          <h3 class="cert-title">Certificate of Fatherhood</h3>
+          <p class="cert-body">This document officially certifies that despite overwhelming biological evidence to the contrary, <strong>Keilah</strong> has become <strong>Ivan's Father</strong>.</p>
+          <div class="cert-signature">
+            <span>Authorized by the Department of Confused Relationships</span>
+          </div>
+          <div id="approvedStamp" class="approved-stamp hidden" aria-hidden="true">APPROVED</div>
+        </div>
+        <button class="btn-primary" id="approveCertBtn" type="button">APPROVE DOCUMENT</button>
+      </div>
+    </section>
+
+    <!-- DNA -->
+    <section id="dna" class="section dna-section">
+      <h2 class="section-title"><span data-gicon="dna" data-gsize="md" data-gaccent="pink"></span> DNA Analyzer</h2>
+      <div class="glass-card dna-machine">
+        <div class="dna-display" id="dnaDisplay">
+          <p class="dna-idle">Insert emotional bond and press RUN</p>
+        </div>
+        <button class="btn-primary" id="runDnaBtn" type="button">Run DNA Test</button>
+      </div>
+    </section>
+
+    <!-- Supreme Court -->
+    <section id="court" class="section court-section">
+      <h2 class="section-title"><span data-gicon="scales" data-gsize="md" data-gaccent="gold"></span> Supreme Court Case</h2>
+      <div class="glass-card courtroom">
+        <div class="court-header">SUPREME COURT OF FEELINGS</div>
+        <p class="court-case">Case No. 2026-FTHR-001<br><strong>Ivan v. Reality</strong></p>
+        <button class="btn-gavel" id="gavelBtn" type="button" aria-label="Bang gavel">
+          <span data-gicon="hammer" data-gsize="lg" data-gaccent="gold"></span>
+          <span class="gavel-label">Bang Gavel</span>
+        </button>
+        <div id="courtVerdict" class="court-verdict hidden">
+          <p>"After careful consideration, this court recognizes <strong>Keilah</strong> as Father due to repeated acts of guidance, caring, and checking whether Ivan has eaten."</p>
+          <p class="case-closed">Case Closed.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Quiz -->
+    <section id="quiz" class="section quiz-section">
+      <h2 class="section-title"><span data-gicon="target" data-gsize="md"></span> Father Qualification Quiz</h2>
+      <div class="glass-card quiz-card" id="quizCard">
+        <div id="quizContent"></div>
+      </div>
+    </section>
+
+    <!-- Father Meter -->
+    <section id="meter" class="section meter-section">
+      <h2 class="section-title"><span data-gicon="meter" data-gsize="md" data-gaccent="pink"></span> Father Meter</h2>
+      <div class="glass-card meter-card">
+        <div class="meter-gauge">
+          <svg viewBox="0 0 200 120" class="gauge-svg">
+            <path class="gauge-bg" d="M 20 100 A 80 80 0 0 1 180 100" fill="none" stroke-width="12"/>
+            <path class="gauge-fill" id="gaugeFill" d="M 20 100 A 80 80 0 0 1 180 100" fill="none" stroke-width="12"/>
+          </svg>
+          <div class="gauge-value" id="gaugeValue">0%</div>
+        </div>
+        <p class="meter-status" id="meterStatus"></p>
+        <button class="btn-secondary" id="runMeterBtn" type="button">Scan Dad Energy</button>
+      </div>
+    </section>
+
+    <!-- Achievements -->
+    <section id="achievements" class="section achievements-section">
+      <h2 class="section-title"><span data-gicon="trophy" data-gsize="md" data-gaccent="gold"></span> Achievement System</h2>
+      <div class="achievements-grid" id="achievementsGrid"></div>
+    </section>
+
+    <!-- Wisdom -->
+    <section id="wisdom" class="section wisdom-section">
+      <h2 class="section-title"><span data-gicon="chat" data-gsize="md"></span> Father Wisdom Generator</h2>
+      <div class="wisdom-wrap">
+        <div class="wisdom-card" id="wisdomCard">
+          <p class="wisdom-quote" id="wisdomQuote">Press the button. You know you want to.</p>
+        </div>
+        <button class="btn-primary" id="wisdomBtn" type="button">Generate Wisdom</button>
+      </div>
+    </section>
+
+    <!-- Timeline -->
+    <section id="timeline" class="section timeline-section">
+      <h2 class="section-title"><span data-gicon="calendar" data-gsize="md"></span> Timeline of Events</h2>
+      <div class="timeline" id="timelineList"></div>
+    </section>
+
+    <!-- Wikipedia -->
+    <section id="wiki" class="section wiki-section">
+      <h2 class="section-title"><span data-gicon="news" data-gsize="md"></span> Fake Wikipedia Entry</h2>
+      <details class="wiki-card">
+        <summary class="wiki-summary">
+          <span class="wiki-title">Keilah</span>
+          <span class="wiki-chevron">›</span>
+        </summary>
+        <div class="wiki-content">
+          <div class="wiki-photo-wrap">
+            <img src="mom.png" alt="Keilah Wikipedia photo" class="wiki-photo" loading="lazy">
+            <p class="wiki-photo-caption">Official portrait. Note the parental grip.</p>
+          </div>
+          <table class="wiki-infobox">
+            <tr><th>Occupation</th><td>Girlfriend</td></tr>
+            <tr><th>Known For</th><td>Somehow becoming Ivan's Father</td></tr>
+            <tr><th>Scientific Status</th><td>Unexplained</td></tr>
+            <tr><th>Researchers</th><td>Confused</td></tr>
+            <tr><th>Public Reaction</th><td>Laughter</td></tr>
+          </table>
+          <p class="wiki-p">Keilah is a person who, through a series of events that defy conventional relationship taxonomy, has achieved the remarkable status of being both girlfriend and father to Ivan. Biologists have declined to comment. The family tree has been placed in protective custody.</p>
+        </div>
+      </details>
+    </section>
+
+    <!-- Performance Review -->
+    <section id="review" class="section review-section">
+      <h2 class="section-title"><span data-gicon="receipt" data-gsize="md"></span> Parenting Performance Review</h2>
+      <div class="glass-card review-card">
+        <div class="review-grades" id="reviewGrades"></div>
+        <div class="review-final">
+          <p class="review-grade-label">Final Grade</p>
+          <p class="review-grade-value">Outstanding.</p>
+          <p class="review-promo">Promotion approved.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Emergency -->
+    <section id="emergency" class="section emergency-section">
+      <h2 class="section-title"><span data-gicon="siren" data-gsize="md" data-gaccent="red"></span> Emergency Protocol</h2>
+      <button class="btn-emergency" id="emergencyBtn" type="button">
+        PRESS ONLY IF YOU ARE REALLY MY FATHER
+      </button>
+    </section>
+
+    <!-- Slot Machine -->
+    <section id="slots" class="section slots-section">
+      <h2 class="section-title"><span data-gicon="slot" data-gsize="md" data-gaccent="gold"></span> Father Slot Machine</h2>
+      <div class="glass-card slot-machine">
+        <div class="slot-reels" id="slotReels">
+          <div class="slot-reel" id="reel1"><div class="reel-inner"></div></div>
+          <div class="slot-reel" id="reel2"><div class="reel-inner"></div></div>
+          <div class="slot-reel" id="reel3"><div class="reel-inner"></div></div>
+        </div>
+        <button class="btn-primary" id="spinBtn" type="button">SPIN</button>
+        <p class="slot-result hidden" id="slotResult">YOU WIN: ANOTHER FATHER TITLE.</p>
+      </div>
+    </section>
+
+    <!-- Radar -->
+    <section id="radar" class="section radar-section">
+      <h2 class="section-title"><span data-gicon="radar" data-gsize="md"></span> Live Radar</h2>
+      <div class="glass-card radar-card">
+        <div class="radar-screen" id="radarScreen">
+          <div class="radar-sweep"></div>
+          <div class="radar-rings"></div>
+          <div class="radar-blips" id="radarBlips"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Handbook -->
+    <section id="handbook" class="section handbook-section">
+      <h2 class="section-title"><span data-gicon="book" data-gsize="md" data-gaccent="gold"></span> Official Handbook</h2>
+      <div class="flipbook" id="flipbook">
+        <button class="flip-nav flip-prev" id="flipPrev" type="button" aria-label="Previous page">‹</button>
+        <div class="flip-pages" id="flipPages"></div>
+        <button class="flip-nav flip-next" id="flipNext" type="button" aria-label="Next page">›</button>
+      </div>
+      <p class="flip-indicator" id="flipIndicator">Page 1 of 5</p>
+    </section>
+
+    <!-- Finale -->
+    <section id="finale" class="section finale-section">
+      <div class="finale-card">
+        <p class="finale-message">All jokes aside… thank you for always caring about me, checking on me, and being there for me. Happy Father's Day to my totally-not-actually-father</p>
+        <div class="finale-hearts" aria-hidden="true">
+          <span data-gicon="heart" data-gsize="sm" data-gaccent="pink"></span>
+          <span data-gicon="heart" data-gsize="md" data-gaccent="pink"></span>
+          <span data-gicon="heart" data-gsize="sm" data-gaccent="pink"></span>
+        </div>
+        <p class="finale-small">please stop adopting me</p>
+      </div>
+      <div class="hearts-container" id="heartsContainer" aria-hidden="true"></div>
+    </section>
+  </div>
+
+  <!-- Modals -->
+  <div id="emergencyModal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="emergencyTitle">
+    <div class="modal-backdrop"></div>
+    <div class="modal-content emergency-modal-content">
+      <h3 id="emergencyTitle"><span data-gicon="siren" data-gsize="sm" data-gaccent="red"></span> Emergency Protocol Activated</h3>
+      <p>Keilah is now legally required to remind Ivan to:</p>
+      <ul class="emergency-list">
+        <li>eat</li>
+        <li>sleep</li>
+        <li>drink water</li>
+        <li>be careful</li>
+        <li>text when he gets home</li>
+      </ul>
+      <button class="btn-primary" id="closeEmergency" type="button">Acknowledge</button>
+    </div>
+  </div>
+
+  <div id="secretModal" class="modal hidden" role="dialog" aria-modal="true">
+    <div class="modal-backdrop"></div>
+    <div class="modal-content secret-modal-content">
+      <h3><span data-gicon="lock" data-gsize="sm" data-gaccent="gold"></span> SECRET FILE FOUND</h3>
+      <p class="secret-text">"The girlfriend has infiltrated the Dad Department."</p>
+      <button class="btn-primary" id="closeSecret" type="button">Close File</button>
+    </div>
+  </div>
+
+  <div id="xpToast" class="xp-toast hidden" role="status">+500 Father XP</div>
+  <div id="footerSecret" class="footer-secret hidden">Plot twist: she's still your girlfriend</div>
+
+  <footer class="site-footer" id="siteFooter">
+    <p>© 2026 Keilah Fatherhood Industries™ • Not affiliated with biology</p>
+    <p class="footer-hint">No easter eggs here. Definitely not.</p>
+  </footer>
+
+  <script src="icons.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
